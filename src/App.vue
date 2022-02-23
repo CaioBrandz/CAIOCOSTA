@@ -6,8 +6,13 @@
     funcionalidades requisitadas, bem como as mudanças visuais a fim de tornar a página esteticamente mais agradável e adequada a experiência do usuário.
   </div>
   <Senha />
-  <DropDown ref="dd" :opcoesDD="opcoesSelect" />
+  
+  <DropDown ref="dd" :opcoesDD="opcoesSelect" v-model:parent-op="parentOp"/>
+  <div class="results">
+    <h1>{{ parentOp }}</h1>
+  </div>
   <Lista :dados="dadosLista" @mudancaEmitida="mudancaLista" />
+  <h1> {{dadosLista}}</h1>
   <br />
   <div class="info msg">
     Em caso de dúvida entre em contato pelo email <a href="mailto:mardt@usp.br">mardt@usp.br</a>.
@@ -49,7 +54,8 @@
           "Opção 5",
           "Opção 6",
           "Opção 7",
-        ]
+        ],
+        parentOp: ["parent's array"],
       };
     },
     methods: {
@@ -65,7 +71,7 @@
 
 <style>
  #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -83,6 +89,13 @@
    font-size: 1.5rem;
    font-weight: bold;
  }
+
+ .results{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
 
  .question-text {
    font-size: 1rem;
