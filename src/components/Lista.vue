@@ -21,11 +21,24 @@
     </ul>
 
     <div class="entradas">
-        <div class="entrada" v-for="i in lista" v-bind:key="i">
+        <div class="entrada" v-for="(li,index) in lista" v-bind:key="index" >
+            <div class="info"> 
+                <h1>Index = {{index}}</h1>
+                <h1>Id = {{li.id}}</h1>
+                <h1>{{li}}</h1>
+            </div>
+            <div class="inputs">
+                <label for="op1">Op1: </label>
+                <input type="text" id="op1" :value="li.op1" @keyup="up2(index,$event.target.value)">
+            </div>
+            <div class="inputs">
+                <label for="op2">Op2: </label>
+                <input type="text" id="op2" :value="li.op2"  @keyup="up1(index,$event.target.value)" >
+            </div>
         </div>
     </div>
 
-    <button type="submit" @click="update" class="form-button">Atualizar</button>
+    <button type="submit" @click="update" class="form-button" >Atualizar</button>
 </template>
 
 <script>
@@ -34,12 +47,15 @@
         props: {
             dados: {
                 type: Array,
-                required: true
-            }
+                required: true,
+                mudancaEmitida: Array,
+            },
+            
         },
+        emits: ['mudancaEmitida'],
         data() {
             return {
-                lista: [""] // deve representar a lista dada
+                lista: [...this.dados], // deve representar a lista dada
             };
         },
         watch: {},
@@ -47,7 +63,16 @@
             placeholder() { return true; },
         },
         methods: {
-            update() {
+            up1(index,a) {
+                console.log(index);
+                this.lista.splice(index,1,{'id':this.lista[index].id,'op1':this.lista[index].op1,'op2':a});
+            },
+            up2(index,a) {
+                console.log(index);
+                this.lista.splice(index,1,{'id':this.lista[index].id,'op1':a,'op2':this.lista[index].op2});
+            },
+            update(){
+                this.$emit('mudancaEmitida', this.lista);
             }
         }
     }
@@ -67,11 +92,43 @@
  }
 
  .entradas {
-     width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
  }
 
  .entrada {
-     /* ... */
+    margin: 20px;
+    min-width: 180px;
+    width: 30%;
+    padding: 20px;
+    background-image: linear-gradient(315deg,#6111a3 0%,#f34242 200%);
+    border: none;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    color: #FFFFFF;
+    font-size: 20px;
+
+ }
+ .inputs>input{
+     width: calc(40%);
+    border: 2px solid white;
+    border-radius: 8px;
+    background-color: rgb(231, 231, 231);
+    padding: 10px 5px;
+    outline: 0;
+    font-size: 1rem;
+ }
+ .inputs{
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+ }
+
+ .info{
+    text-align: center;
+    font-size: 0.8rem;
  }
 
  .json-example {

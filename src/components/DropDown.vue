@@ -75,6 +75,7 @@
      border-width: 2px;
     border-image: linear-gradient(145deg,#5B42F3 50%,#00DDEB);
     border-image-slice: 1;
+    min-width: 150px;
  }
 
 .results{

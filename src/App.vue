@@ -12,7 +12,7 @@
     <h1>{{ parentOp }}</h1>
   </div>
   <Lista :dados="dadosLista" @mudancaEmitida="mudancaLista" />
-  <h1> {{dadosLista}}</h1>
+  <h1 class="results"> {{dadosN}}</h1>
   <br />
   <div class="info msg">
     Em caso de dúvida entre em contato pelo email <a href="mailto:mardt@usp.br">mardt@usp.br</a>.
@@ -56,12 +56,14 @@
           "Opção 7",
         ],
         parentOp: ["parent's array"],
+        dadosN: []
       };
     },
     methods: {
-      mudancaLista() {
+      mudancaLista(veio) {
         console.log('Lista recebida!')
         // Exiba a lista editada
+        this.dadosN = veio;
       }
     },
     mounted() {
